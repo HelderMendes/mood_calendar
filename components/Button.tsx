@@ -2,16 +2,21 @@ import { Fugaz_One } from 'next/font/google';
 
 const fugaz = Fugaz_One({ subsets: ['latin'], weight: '400' });
 
-// interface ButtonProps {
-//   text: string;
-//   full?: boolean;
-//   dark?: boolean;
-//   className?: string;
-//   clickHandler(): void; // Add style prop for inline CSS
-// }
+interface ButtonProps {
+  text: string;
+  full?: boolean;
+  dark?: boolean;
+  className?: string;
+  clickHandler?: () => void;
+}
 
-export default function Button(props) {
-  const { text, dark, full, clickHandler } = props;
+export default function Button({
+  text,
+  dark = false,
+  full = false,
+  clickHandler,
+  className = '',
+}: ButtonProps) {
   return (
     <button
       onClick={clickHandler}

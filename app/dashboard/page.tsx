@@ -9,7 +9,7 @@ export const metadata = {
     'Extra description – Track your daily mood every day of the year!',
 };
 
-function DashboardPage() {
+function DashboardPage(): JSX.Element {
   return (
     <Main>
       <Dashboard />

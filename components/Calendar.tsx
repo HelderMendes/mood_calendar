@@ -31,8 +31,17 @@ const dayList = [
   'Saturday',
 ];
 
-export default function Calendar(props) {
-  const { demo, completeData, handleSetMood } = props;
+interface CalendarProps {
+  demo?: boolean;
+  completeData?: Record<number, Record<number, any>>;
+  handleSetMood?: (mood: number) => void;
+}
+
+export default function Calendar({
+  demo = false,
+  completeData = {},
+  handleSetMood,
+}: CalendarProps) {
   const today = new Date();
   const currentMonth = today.getMonth();
   const [selectedMonth, setSelectedMonth] = useState(
@@ -41,24 +50,7 @@ export default function Calendar(props) {
   const [selectedYear, setSelectedYear] = useState(today.getFullYear());
 
   const numericMonth = monthsArr.indexOf(selectedMonth);
-  const data = completeData?.[selectedYear]?.[numericMonth] || {};
-
-  //   function handleIncrementMonth(val: number) {
-  //     // value +1 or -1
-  //     // if we hit the bounds of he months, the we can just adjust the year that is displayed instead
-  //     if (selectedMonth + val ) < 0 {
-  //       // set month value = 11 and decrement the year
-  //       setSelectedYear((e) => e - 1);
-  //       setSelectedMonth(monthsArr[11]);
-  //       console.log('Mês seleccionado deve ser o último');
-  //     } else if (numericMonth + val > 11) {
-  //       // set month val = 0 and increment the year
-  //       setSelectedYear((e) => e + 1);
-  //       setSelectedMonth(monthsArr[0]);
-  //     } else {
-  //       setSelectedMonth(monthsArr[numericMonth + val]);
-  //     }
-  //   }
+  const data: boolean = completeData?.[selectedYear]?.[numericMonth] || {};
 
   function handleIncrementMonth(val: number) {
     const newMonthIndex = numericMonth + val;
@@ -78,10 +70,6 @@ export default function Calendar(props) {
   }
 
   console.log('Selected Month: ', selectedMonth);
-
-  // const { demo, data, handleSetMood } = props;
-  // const year = 2024;
-  // const month = 'September';
 
   // Get index of month (e.g. for 'September', it would return 6)
   const monthIndex = Object.keys(months).indexOf(selectedMonth);

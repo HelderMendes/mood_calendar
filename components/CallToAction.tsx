@@ -39,10 +39,10 @@ export default function CallToAction() {
       ) : (
         <div className='mx-auto grid w-fit grid-cols-2 gap-4'>
           <Link href={'/dashboard'}>
-            <Button text='Sing Up'></Button>
+            <Button text='Sign Up' />
           </Link>
           <Link href={'/dashboard'}>
-            <Button text='Login' dark></Button>
+            <Button text='Login' dark />
           </Link>
         </div>
       )}
