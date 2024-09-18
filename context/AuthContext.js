@@ -13,43 +13,43 @@ import {
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useContext, useState, useEffect, ReactNode } from 'react';
 
-interface AuthContextType {
-  currentUser: any;
-  userDataObj: object;
-  signup: (email: string, password: string) => Promise<any>;
-  login: (email: string, password: string) => Promise<any>;
-  logout: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
-  loading: boolean;
-}
+// interface AuthContextType {
+//   currentUser: any;
+//   userDataObj: object;
+//   signup: (email: string, password: string) => Promise<any>;
+//   login: (email: string, password: string) => Promise<any>;
+//   logout: () => Promise<void>;
+//   resetPassword: (email: string) => Promise<void>;
+//   loading: boolean;
+// }
 
 // const AuthContext=React.createContext(null);
-const AuthContext = React.createContext<AuthContextType | null>(null);
+const AuthContext = React.createContext();
 
 // CUSTOM HOOK
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
+// interface AuthProviderProps {
+//   children: ReactNode;
+// }
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [userDataObj, setUserDataObj] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Auth handlers
-  const signup = (email: string, password: string) => {
+  const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const login = (email: string, password: string) => {
+  const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const resetPassword = (email: string) => {
+  const resetPassword = (email) => {
     setUserDataObj({});
     setCurrentUser(null);
     return sendPasswordResetEmail(auth, email);
@@ -119,7 +119,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return unsubscribe; // clean up the subscription
   }, []);
 
-  const value: AuthContextType = {
+  const value = {
     currentUser,
     userDataObj,
     setUserDataObj,

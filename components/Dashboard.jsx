@@ -36,7 +36,7 @@ export default function Dashboard() {
     }
     return {
       num_days: totalNumberOfDays,
-      avarage_mood: sumMoods / totalNumberOfDays,
+      avarage_mood: (sumMoods / totalNumberOfDays).toFixed(2),
     };
   }
 
