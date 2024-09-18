@@ -10,7 +10,7 @@ const fugaz = Fugaz_One({ subsets: ['latin'], weight: '400' });
 //   clickHandler(): void; // Add style prop for inline CSS
 // }
 
-export default function Button(props: ButtonProps) {
+export default function Button(props) {
   const { text, dark, full, clickHandler } = props;
   return (
     <button
