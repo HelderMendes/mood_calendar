@@ -1,5 +1,5 @@
 'use client';
-import { auth, db } from '@/utils/firebase';
+import { auth, db } from '@/config/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -86,36 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setLoading(false); // Stop loading after the process is done
       }
     });
-    //         // setCurrentUser({});
-    //         if (!user) {
-    //             console.log('No User found!');
-    //             return;
-    //         }
 
-    //         // if user existes, fetch data from FERESTORE DB
-    //         console.log('Fetching User data');
-
-    //         const docRef = doc(db, 'users', user.uid);
-    //         const docSnap = await getDoc(docRef);
-
-    //         // let firebaseData = {};
-
-    //         if (docSnap.exists()) {
-    //             console.log('Did Find User data');
-    //             // firebaseData = docSnap.data();
-    //             setUserDataObj(docSnap.data());
-    //             // console.log(firebaseData);
-    //             console.log(docSnap.data());
-    //         } else {
-    //             setUserDataObj({});
-    //         }
-    //         // setUserDataObj(firebaseData);
-    //     } catch (err) {
-    //         console.log(err.message);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // });
     return unsubscribe; // clean up the subscription
   }, []);
 

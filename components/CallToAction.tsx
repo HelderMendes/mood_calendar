@@ -29,10 +29,10 @@ export default function CallToAction() {
         <div className='mx-auto grid w-full max-w-[450px]'>
           <Link href={'/dashboard'}>
             <Button
-              className='text-xl'
+              text='Go to the Dashboard'
               full
               dark
-              text='Go to the Dashboard'
+              className='text-xl'
             ></Button>
           </Link>
         </div>

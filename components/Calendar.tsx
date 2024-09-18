@@ -20,7 +20,6 @@ const months = {
   December: 'Dec',
 };
 const monthsArr = Object.keys(months);
-// const now = new Date();
 const dayList = [
   'Sunday',
   'Monday',
@@ -34,7 +33,7 @@ const dayList = [
 interface CalendarProps {
   demo?: boolean;
   completeData?: Record<number, Record<number, any>>;
-  handleSetMood?: (mood: number) => void;
+  handleSetMood?: (mood: any) => void;
 }
 
 export default function Calendar({
@@ -83,12 +82,6 @@ export default function Calendar({
   const daysToDisplay = firstDayOfMonth + daysInMonth;
   const numRows = Math.ceil(daysToDisplay / 7);
 
-  //     const monthNow = new Date(year, Object.keys(month).indexOf(month), 1);
-  //     const firstDayOfMonth = month Now.getDay();
-  //     const daysInMonth = new Date(year, Object.keys(month) + 1, 0);
-
-  //     const daysToDispaly = firstDayOfMonth + daysInMonth;
-  //     const numRows = Math.floor(daysToDispaly / 7) + (daysToDispaly % 7 ? 1 : 0);
   return (
     <div className='mt-4 flex flex-col gap-2'>
       <div className='-mb-1 grid grid-cols-5 gap-0 text-2xl text-indigo-400 sm:-mb-5 sm:text-3xl'>
