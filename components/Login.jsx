@@ -42,7 +42,7 @@ export default function Login() {
       <p className='pb-4'>You&apos;re one step away!</p>
       <input
         value={email}
-        onChange={(e: string) => {
+        onChange={(e) => {
           setEmail(e.target.value);
         }}
         placeholder='Email'
@@ -50,7 +50,7 @@ export default function Login() {
       />
       <input
         value={password}
-        onChange={(e: string) => {
+        onChange={(e) => {
           setPassword(e.target.value);
         }}
         placeholder='password'

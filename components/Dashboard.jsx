@@ -11,11 +11,11 @@ import DateTimeBanner from './DateTimeBanner';
 
 const fugaz = Fugaz_One({ subsets: ['latin'], weight: '400' });
 
-interface StatusesProps {
-  num_days: number;
-  avarage_mood: string | number;
-  time_remaining: string;
-}
+// interface StatusesProps {
+//   num_days: number;
+//   avarage_mood: string | number;
+//   time_remaining: string;
+// }
 
 export default function Dashboard() {
   const { currentUser, userDataObj, setUserDataObj, loading } = useAuth();
@@ -40,12 +40,12 @@ export default function Dashboard() {
     };
   }
 
-  const statuses: StatusesProps = {
+  const statuses = {
     ...countValues(),
     time_remaining: `${23 - now.getHours()}H ${60 - now.getMinutes()}M`, // Calculate remaining hours and minutes as a string
   };
 
-  async function handleSetMood(mood: number) {
+  async function handleSetMood(mood) {
     const now = new Date();
     const day = now.getDate();
     const month = now.getMonth();

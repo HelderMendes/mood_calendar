@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { AuthProvider } from '@/context/AuthContext';
 import Head from './head';
 import Logout from '@/components/Logut';
-import ResetPassword from '@/components/ResetPassword';
+// import ResetPassword from '@/components/ResetPassword';
 
 const opensans = Open_Sans({ subsets: ['latin'] });
 const fugaz = Fugaz_One({ subsets: ['latin'], weight: '400' });

@@ -60,7 +60,7 @@ export default function Calendar(props) {
   //     }
   //   }
 
-  function handleIncrementMonth(val: number) {
+  function handleIncrementMonth(val) {
     const newMonthIndex = numericMonth + val;
 
     if (newMonthIndex < 0) {
