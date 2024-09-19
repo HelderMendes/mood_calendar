@@ -1,6 +1,7 @@
 import Main from '@/components/Main';
 import Dashboard from '@/components/Dashboard';
-// import Login from '@/components/Login';
+import Loading from '@/components/Loading';
+import { Suspense } from 'react';
 // import { useAuth } from '@/context/AuthContext';
 
 export const metadata = {
@@ -12,7 +13,9 @@ export const metadata = {
 function DashboardPage(): JSX.Element {
   return (
     <Main>
-      <Dashboard />
+      <Suspense fallback={<Loading />}>
+        <Dashboard />
+      </Suspense>
     </Main>
   );
 }

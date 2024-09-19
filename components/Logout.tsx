@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { usePathname } from 'next/navigation';
 
 export default function Logout() {
-  const { logout, currentUser } = useAuth();
+  const { logout, currentUser } = useAuth() || {};
   const pathName = usePathname();
   console.log(pathName);
 

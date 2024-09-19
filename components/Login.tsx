@@ -1,18 +1,18 @@
 'use client';
 import { Fugaz_One } from 'next/font/google';
 import Button from './Button';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 
 const fugaz = Fugaz_One({ subsets: ['latin'], weight: '400' });
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isRegister, setIsRegister] = useState(false);
-  const [authenticating, setAuthenticating] = useState(false);
+  const [email, setEmail] = useState<string>(''); // State for email
+  const [password, setPassword] = useState<string>(''); // State for password
+  const [isRegister, setIsRegister] = useState<boolean>(false); // State to toggle between login and signup
+  const [authenticating, setAuthenticating] = useState<boolean>(false); // State to handle loading
 
-  const { signup, login } = useAuth();
+  const { signup, login } = useAuth() || {};
 
   async function handleSubmit() {
     if (!email || !password || password.length < 6) {
@@ -22,13 +22,13 @@ export default function Login() {
     try {
       if (isRegister) {
         console.log('Signing up a new user');
-        await signup(email, password);
+        await signup?.(email, password);
       } else {
         console.log('Logging as an existing user');
-        await login(email, password);
+        await login?.(email, password);
       }
-    } catch (err) {
-      console.log(err.message);
+    } catch (err: unknown) {
+      console.log(err, 'There was one unknown derver error message');
     } finally {
       setAuthenticating(false);
     }
@@ -40,17 +40,19 @@ export default function Login() {
         {!isRegister ? 'Log In' : 'Register'}
       </h3>
       <p className='pb-4'>You&apos;re one step away!</p>
+      {/* Email Input */}
       <input
         value={email}
-        onChange={(e: string) => {
-          setEmail(e.target.value);
-        }}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setEmail(e.target.value)
+        }
         placeholder='Email'
         className='mx-auto w-full max-w-[400px] rounded-full border border-solid border-indigo-400 px-3 outline-none duration-200 hover:border-indigo-600 focus:border-indigo-600 sm:py-3'
       />
+      {/* Password Input */}{' '}
       <input
         value={password}
-        onChange={(e: string) => {
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
           setPassword(e.target.value);
         }}
         placeholder='password'

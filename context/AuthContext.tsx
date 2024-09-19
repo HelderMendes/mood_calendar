@@ -11,11 +11,20 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import React, { useContext, useState, useEffect, ReactNode } from 'react';
+// import React,{useContext,useState,useEffect,ReactNode} from 'react';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 
 interface AuthContextType {
-  currentUser: any;
-  userDataObj: object;
+  currentUser: User | null;
+  userDataObj: object | null;
+  setUserDataObj: Dispatch<SetStateAction<object | null>>;
   signup: (email: string, password: string) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => Promise<void>;
@@ -36,8 +45,8 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [userDataObj, setUserDataObj] = useState(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [userDataObj, setUserDataObj] = useState<object | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Auth handlers

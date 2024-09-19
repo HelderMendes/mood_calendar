@@ -11,6 +11,14 @@ import DateTimeBanner from './DateTimeBanner';
 
 const fugaz = Fugaz_One({ subsets: ['latin'], weight: '400' });
 
+interface UserData {
+  [year: string]: {
+    [month: string]: {
+      [day: string]: number;
+    };
+  };
+}
+
 interface StatusesProps {
   num_days: number;
   avarage_mood: string | number;
@@ -19,7 +27,7 @@ interface StatusesProps {
 
 export default function Dashboard() {
   const { currentUser, userDataObj, setUserDataObj, loading } = useAuth();
-  const [data, setData] = useState({});
+  const [data, setData] = useState<UserData | {}>({});
   const now = new Date();
 
   function countValues() {
@@ -36,7 +44,10 @@ export default function Dashboard() {
     }
     return {
       num_days: totalNumberOfDays,
-      avarage_mood: (sumMoods / totalNumberOfDays).toFixed(2),
+      avarage_mood:
+        totalNumberOfDays > 0
+          ? (sumMoods / totalNumberOfDays).toFixed(2)
+          : 'N/A',
     };
   }
 
@@ -52,7 +63,7 @@ export default function Dashboard() {
     const year = now.getFullYear();
 
     try {
-      const newData = { ...userDataObj };
+      const newData = { ...userDataObj } as UserData;
       if (!newData?.[year]) {
         newData[year] = {};
       }
@@ -66,7 +77,7 @@ export default function Dashboard() {
       // update the global state
       setUserDataObj(newData);
       // update firebase
-      const docRef = doc(db, 'users', currentUser.uid);
+      const docRef = doc(db, 'users', currentUser.uid as string);
       const res = await setDoc(
         docRef,
         {
@@ -78,7 +89,7 @@ export default function Dashboard() {
         },
         { merge: true },
       );
-    } catch (error) {
+    } catch (error: any) {
       console.log('Fail to save your mood', error.message);
     }
   }
@@ -88,7 +99,7 @@ export default function Dashboard() {
       setData({}); // Clear the data when logged out
       return;
     }
-    setData(userDataObj); // Set the user data when logged in
+    setData(userDataObj as UserData); // Set the user data when logged in
   }, [currentUser, userDataObj]);
 
   // const { currentUser, loading } = useAuth();
@@ -102,7 +113,7 @@ export default function Dashboard() {
   }
   // !isAuth ? (children = <Login />) : (children = <Dashboard />);
 
-  const moods = {
+  const moods: Record<string, string> = {
     Angry: '😤',
     Sad: '😭',
     Worried: '😥',
@@ -118,19 +129,17 @@ export default function Dashboard() {
     <div className='md-gap-20 flex flex-1 flex-col gap-10 sm:gap-14'>
       <DateTimeBanner />
       <div className='grid grid-cols-3 gap-4 rounded-lg bg-indigo-50 p-4 text-indigo-500'>
-        {Object.keys(statuses).map((status, statusIndex) => {
-          return (
-            <div key={statusIndex} className='flex flex-col gap-1 p-4 sm:gap-2'>
-              <p className='truncate text-xs font-medium capitalize sm:text-sm'>
-                {status.replaceAll('-', ' ')}
-              </p>
-              <p className={'truncate ' + fugaz.className}>
-                {statuses[status]}
-                {status === 'num_days' ? ' 🌶️' : ' 🤯'}
-              </p>
-            </div>
-          );
-        })}
+        {Object.keys(statuses).map((status, statusIndex) => (
+          <div key={statusIndex} className='flex flex-col gap-1 p-4 sm:gap-2'>
+            <p className='truncate text-xs font-medium capitalize sm:text-sm'>
+              {status.replaceAll('-', ' ')}
+            </p>
+            <p className={'truncate ' + fugaz.className}>
+              {statuses[status as keyof StatusesProps]}
+              {status === 'num_days' ? ' 🌶️' : ' 🤯'}
+            </p>
+          </div>
+        ))}
       </div>
       <h4
         className={

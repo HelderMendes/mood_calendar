@@ -5,8 +5,10 @@ import './globals.css';
 import Link from 'next/link';
 import { AuthProvider } from '@/context/AuthContext';
 import Head from './head';
-import Logout from '@/components/LogOut';
+import Logout from '@/components/Logout';
 // import ResetPassword from '@/components/ResetPassword';
+// import Loading from '@/components/Loading';
+// import { Suspense } from 'react';
 
 const opensans = Open_Sans({ subsets: ['latin'] });
 const fugaz = Fugaz_One({ subsets: ['latin'], weight: '400' });
