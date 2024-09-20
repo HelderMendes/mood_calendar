@@ -49,7 +49,7 @@ export default function Calendar({
   const [selectedYear, setSelectedYear] = useState(today.getFullYear());
 
   const numericMonth = monthsArr.indexOf(selectedMonth);
-  const data: boolean = completeData?.[selectedYear]?.[numericMonth] || {};
+  const data: boolean = !!completeData?.[selectedYear]?.[numericMonth];
 
   function handleIncrementMonth(val: number) {
     const newMonthIndex = numericMonth + val;
