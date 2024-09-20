@@ -111,7 +111,10 @@ export default function Calendar({
         </button>
       </div>
       <div className='flex flex-col gap-1 overflow-hidden py-4 sm:py-6 md:py-10'>
-        {[...Array(numRows).keys()].map((row, rowIndex) => {
+        {/* {[...Array(numRows).keys()].map((row, rowIndex) => {
+          return (
+            <div key={rowIndex} className='grid grid-cols-7 gap-1'> */}
+        {Array.from(Array(numRows).keys()).map((row, rowIndex) => {
           return (
             <div key={rowIndex} className='grid grid-cols-7 gap-1'>
               {dayList.map((dayOfWeek, dayOfWeekIndex) => {
