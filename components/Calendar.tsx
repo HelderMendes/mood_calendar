@@ -33,7 +33,7 @@ const dayList = [
 interface CalendarProps {
   demo?: boolean;
   completeData?: Record<number, Record<number, any>>;
-  handleSetMood?: (mood: any) => void;
+  handleSetMood?: (mood: unknown) => void;
 }
 
 export default function Calendar({
