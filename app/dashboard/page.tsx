@@ -1,8 +1,8 @@
 import Main from '@/components/Main';
 import Dashboard from '@/components/Dashboard';
-import Loading from '@/components/Loading';
+import Loading from '@/app/Loading';
 import { Suspense } from 'react';
-// import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 
 export const metadata = {
   title: 'Start • Broodl New Title',

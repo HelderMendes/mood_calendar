@@ -5,7 +5,7 @@ import Calendar from './Calendar';
 import { useAuth } from '@/context/AuthContext';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/config/firebase';
-import Loading from './Loading';
+import Loading from '@/app/Loading';
 import Login from './Login';
 import DateTimeBanner from './DateTimeBanner';
 

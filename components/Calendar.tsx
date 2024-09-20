@@ -31,8 +31,8 @@ const dayList = [
 ];
 
 interface CalendarProps {
-  demo?: boolean;
-  completeData?: Record<number, Record<number, any>>;
+  demo?: boolean | null;
+  completeData?: Record<number, Record<number, unknown>>;
   handleSetMood?: (mood: unknown) => void;
 }
 
