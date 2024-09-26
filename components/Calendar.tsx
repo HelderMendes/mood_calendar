@@ -49,7 +49,8 @@ export default function Calendar({
   const [selectedYear, setSelectedYear] = useState(today.getFullYear());
 
   const numericMonth = monthsArr.indexOf(selectedMonth);
-  const data: boolean = !!completeData?.[selectedYear]?.[numericMonth];
+  // const data: boolean = !!completeData?.[selectedYear]?.[numericMonth];
+  const data = completeData[selectedYear]?.[numericMonth] || {};
 
   function handleIncrementMonth(val: number) {
     const newMonthIndex = numericMonth + val;
@@ -110,53 +111,47 @@ export default function Calendar({
           <i className='fa-solid fa-circle-chevron-right text-3xl duration-200 hover:text-indigo-700'></i>
         </button>
       </div>
-      <div className='flex flex-col gap-1 overflow-hidden py-4 sm:py-6 md:py-10'>
-        {/* {[...Array(numRows).keys()].map((row, rowIndex) => {
-          return (
-            <div key={rowIndex} className='grid grid-cols-7 gap-1'> */}
-        {Array.from(Array(numRows).keys()).map((row, rowIndex) => {
-          return (
-            <div key={rowIndex} className='grid grid-cols-7 gap-1'>
-              {dayList.map((dayOfWeek, dayOfWeekIndex) => {
-                let dayIndex =
-                  rowIndex * 7 + dayOfWeekIndex - (firstDayOfMonth - 1);
-
-                let dayDisplay =
-                  dayIndex > daysInMonth
+     <div className='flex flex-col gap-1 overflow-hidden py-4 sm:py-6 md:py-10'>
+        {[...Array(numRows).keys()].map((row, rowIndex) => (
+          <div key={rowIndex} className='grid grid-cols-7 gap-1'>
+            {dayList.map((dayOfWeek, dayOfWeekIndex) => {
+              let dayIndex =
+                rowIndex * 7 + dayOfWeekIndex - (firstDayOfMonth - 1);
+              let dayDisplay =
+                dayIndex > daysInMonth
+                  ? false
+                  : row === 0 && dayOfWeekIndex < firstDayOfMonth
                     ? false
-                    : row === 0 && dayOfWeekIndex < firstDayOfMonth
-                      ? false
-                      : true;
+                    : true;
 
-                let isToday = dayIndex === today.getDate();
+              let isToday = dayIndex === today.getDate();
 
-                if (!dayDisplay) {
-                  return <div className='bg-white' key={dayOfWeekIndex} />;
-                }
+              if (!dayDisplay) {
+                return <div className='bg-white' key={dayOfWeekIndex} />;
+              }
 
-                let color = demo
-                  ? gradients.indigo[baseRating[dayIndex]]
-                  : dayIndex in data
-                    ? gradients.indigo[data[dayIndex]]
-                    : 'white';
+              let color = demo
+                ? gradients.indigo[baseRating[dayIndex]]
+                : dayIndex in data
+                  ? gradients.indigo[data[dayIndex]]
+                  : 'white';
 
-                return (
-                  <div
-                    style={{ background: color }}
-                    className={
-                      'flex items-center justify-between gap-2 rounded-lg border border-solid p-2 text-xs sm:text-sm ' +
-                      (isToday ? ' border-indigo-400' : ' border-indigo-100') +
-                      (color === 'white' ? ' text-indigo-400' : ' text-white')
-                    }
-                    key={dayOfWeekIndex}
-                  >
-                    <p>{dayIndex}</p>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+              return (
+                <div
+                  style={{ background: color }}
+                  className={
+                    'flex items-center justify-between gap-2 rounded-lg border border-solid p-2 text-xs sm:text-sm ' +
+                    (isToday ? ' border-indigo-400' : ' border-indigo-100') +
+                    (color === 'white' ? ' text-indigo-400' : ' text-white')
+                  }
+                  key={dayOfWeekIndex}
+                >
+                  <p>{dayIndex}</p>
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </div>
   );
