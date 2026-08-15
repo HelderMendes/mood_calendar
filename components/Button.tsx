@@ -23,7 +23,8 @@ export default function Button({
       className={
         'overflow-hidden rounded-full border-2 border-solid border-indigo-600 duration-200 hover:opacity-60 ' +
         (dark ? ' bg-indigo-600 text-white' : ' text-indigo-600') +
-        (full ? ' grid w-full place-items-center' : ' ')
+        (full ? ' grid w-full place-items-center' : ' ') +
+        className
       }
     >
       <p

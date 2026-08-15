@@ -9,6 +9,7 @@ import {
   // getAuth,
   // signInWithPopup,
   onAuthStateChanged,
+  type User,
 } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 // import React,{useContext,useState,useEffect,ReactNode} from 'react';
@@ -37,7 +38,12 @@ const AuthContext = React.createContext<AuthContextType | null>(null);
 
 // CUSTOM HOOK
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context;
 }
 
 interface AuthProviderProps {

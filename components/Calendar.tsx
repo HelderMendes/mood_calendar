@@ -32,14 +32,12 @@ const dayList = [
 
 interface CalendarProps {
   demo?: boolean | null;
-  completeData?: Record<number, Record<number, unknown>>;
-  handleSetMood?: (mood: unknown) => void;
+  completeData?: Record<number, Record<number, Record<number, number>>>;
 }
 
 export default function Calendar({
   demo = false,
   completeData = {},
-  handleSetMood,
 }: CalendarProps) {
   const today = new Date();
   const currentMonth = today.getMonth();
@@ -50,7 +48,8 @@ export default function Calendar({
 
   const numericMonth = monthsArr.indexOf(selectedMonth);
   // const data: boolean = !!completeData?.[selectedYear]?.[numericMonth];
-  const data = completeData[selectedYear]?.[numericMonth] || {};
+  const data: Record<number, number> =
+    completeData[selectedYear]?.[numericMonth] || {};
 
   function handleIncrementMonth(val: number) {
     const newMonthIndex = numericMonth + val;
@@ -111,29 +110,32 @@ export default function Calendar({
           <i className='fa-solid fa-circle-chevron-right text-3xl duration-200 hover:text-indigo-700'></i>
         </button>
       </div>
-     <div className='flex flex-col gap-1 overflow-hidden py-4 sm:py-6 md:py-10'>
-        {[...Array(numRows).keys()].map((row, rowIndex) => (
+      <div className='flex flex-col gap-1 overflow-hidden py-4 sm:py-6 md:py-10'>
+        {Array.from({ length: numRows }, (_, rowIndex) => rowIndex).map((rowIndex) => (
           <div key={rowIndex} className='grid grid-cols-7 gap-1'>
             {dayList.map((dayOfWeek, dayOfWeekIndex) => {
-              let dayIndex =
+              const dayIndex =
                 rowIndex * 7 + dayOfWeekIndex - (firstDayOfMonth - 1);
-              let dayDisplay =
+              const dayDisplay =
                 dayIndex > daysInMonth
                   ? false
-                  : row === 0 && dayOfWeekIndex < firstDayOfMonth
+                  : rowIndex === 0 && dayOfWeekIndex < firstDayOfMonth
                     ? false
                     : true;
 
-              let isToday = dayIndex === today.getDate();
+              const isToday = dayIndex === today.getDate();
 
               if (!dayDisplay) {
                 return <div className='bg-white' key={dayOfWeekIndex} />;
               }
 
-              let color = demo
-                ? gradients.indigo[baseRating[dayIndex]]
-                : dayIndex in data
-                  ? gradients.indigo[data[dayIndex]]
+              const demoColorIndex =
+                baseRating[String(dayIndex) as keyof typeof baseRating] ?? 0;
+              const savedColorIndex = data[dayIndex];
+              const color = demo
+                ? gradients.indigo[demoColorIndex]
+                : Number.isInteger(savedColorIndex)
+                  ? gradients.indigo[savedColorIndex]
                   : 'white';
 
               return (

@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { usePathname } from 'next/navigation';
 
 export default function ResetPassword() {
-  const { resetPassword, currentUser } = useAuth() || {}; // Fallback to handle potential null from useAuth
+  const { resetPassword, currentUser } = useAuth();
   const pathName = usePathname();
   console.log(pathName);
 
@@ -14,10 +14,15 @@ export default function ResetPassword() {
   }
 
   if (currentUser && pathName === '/') {
+    const email = currentUser.email;
     return (
       <Button
         text='Reset Password'
-        clickHandler={() => resetPassword?.(currentUser.email)}
+        clickHandler={() => {
+          if (email) {
+            resetPassword(email);
+          }
+        }}
       />
     );
   }

@@ -27,16 +27,16 @@ interface StatusesProps {
 
 export default function Dashboard() {
   const { currentUser, userDataObj, setUserDataObj, loading } = useAuth();
-  const [data, setData] = useState<UserData | {}>({});
+  const [data, setData] = useState<UserData>({});
   const now = new Date();
 
   function countValues() {
     let totalNumberOfDays = 0;
     let sumMoods = 0;
-    for (let year in data) {
-      for (let month in data[year]) {
-        for (let day in data[year][month]) {
-          let daysMood = data[year][month][day];
+    for (const year in data) {
+      for (const month in data[year]) {
+        for (const day in data[year][month]) {
+          const daysMood = data[year][month][day];
           totalNumberOfDays++;
           sumMoods += daysMood;
         }
@@ -57,6 +57,10 @@ export default function Dashboard() {
   };
 
   async function handleSetMood(mood: number) {
+    if (!currentUser) {
+      return;
+    }
+
     const now = new Date();
     const day = now.getDate();
     const month = now.getMonth();
@@ -77,8 +81,8 @@ export default function Dashboard() {
       // update the global state
       setUserDataObj(newData);
       // update firebase
-      const docRef = doc(db, 'users', currentUser.uid as string);
-      const res = await setDoc(
+      const docRef = doc(db, 'users', currentUser.uid);
+      await setDoc(
         docRef,
         {
           [year]: {
@@ -89,8 +93,8 @@ export default function Dashboard() {
         },
         { merge: true },
       );
-    } catch (error: any) {
-      console.log('Fail to save your mood', error.message);
+    } catch (error: unknown) {
+      console.log('Fail to save your mood', error);
     }
   }
 
@@ -175,7 +179,7 @@ export default function Dashboard() {
           );
         })}
       </div>
-      <Calendar completeData={data} handleSetMood={handleSetMood} />
+      <Calendar completeData={data} />
     </div>
   );
 }

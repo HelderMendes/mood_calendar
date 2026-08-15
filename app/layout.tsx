@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { Fugaz_One, Open_Sans } from 'next/font/google';
+import {Fugaz_One,Open_Sans} from 'next/font/google';
 import './globals.css';
 import Link from 'next/link';
 import { AuthProvider } from '@/context/AuthContext';

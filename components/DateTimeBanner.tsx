@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 export default function DateTimeBanner() {
   const [numDays, setNumDays] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState('');
-  const [currentDate, setCurrentDate] = useState(new Date().toDateString());
+  const currentDate = new Date().toDateString();
 
   // Function to calculate days remaining in the current month
   function calculateDaysUntilEndOfMonth() {
